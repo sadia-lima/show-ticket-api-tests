@@ -1,0 +1,217 @@
+{
+  "info": {
+    "name": "Show Ticket API Tests",
+    "_postman_id": "c1b3f0c8-7e44-4e2b-9f55-111111111111",
+    "description": "API tests for the Show Ticket Web Application (TAMK VM).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1 - Get All Shows (Happy Path)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://172.16.7.99:3000/api/shows",
+          "protocol": "http",
+          "host": [
+            "172.16.7.99"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "shows"
+          ]
+        }
+      }
+    },
+    {
+      "name": "2 - Get Show By ID (Happy Path)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://172.16.7.99:3000/api/shows/1",
+          "protocol": "http",
+          "host": [
+            "172.16.7.99"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "shows",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "3 - Create Booking Valid (Authenticated)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"showId\": 1,\n  \"customerName\": \"Test User\",\n  \"tickets\": 2\n}"
+        },
+        "url": {
+          "raw": "http://172.16.7.99:3000/api/bookings",
+          "protocol": "http",
+          "host": [
+            "172.16.7.99"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "bookings"
+          ]
+        }
+      }
+    },
+    {
+      "name": "4 - Create Booking Missing Field (Validation)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"showId\": 1\n}"
+        },
+        "url": {
+          "raw": "http://172.16.7.99:3000/api/bookings",
+          "protocol": "http",
+          "host": [
+            "172.16.7.99"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "bookings"
+          ]
+        }
+      }
+    },
+    {
+      "name": "5 - Create Booking Invalid Ticket Quantity",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"showId\": 1,\n  \"customerName\": \"Test User\",\n  \"tickets\": -5\n}"
+        },
+        "url": {
+          "raw": "http://172.16.7.99:3000/api/bookings",
+          "protocol": "http",
+          "host": [
+            "172.16.7.99"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "bookings"
+          ]
+        }
+      }
+    },
+    {
+      "name": "6 - Get Show With Invalid ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://172.16.7.99:3000/api/shows/9999",
+          "protocol": "http",
+          "host": [
+            "172.16.7.99"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "shows",
+            "9999"
+          ]
+        }
+      }
+    },
+    {
+      "name": "7 - Access Protected Endpoint Without Auth",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"showId\": 1,\n  \"customerName\": \"Unauthorized User\",\n  \"tickets\": 1\n}"
+        },
+        "url": {
+          "raw": "http://172.16.7.99:3000/api/bookings",
+          "protocol": "http",
+          "host": [
+            "172.16.7.99"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "bookings"
+          ]
+        }
+      }
+    },
+    {
+      "name": "8 - Booking Too Many Tickets (Business Rule)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"showId\": 1,\n  \"customerName\": \"Test User\",\n  \"tickets\": 500\n}"
+        },
+        "url": {
+          "raw": "http://172.16.7.99:3000/api/bookings",
+          "protocol": "http",
+          "host": [
+            "172.16.7.99"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "bookings"
+          ]
+        }
+      }
+    }
+  ]
+}
